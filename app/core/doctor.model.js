@@ -39,9 +39,9 @@ function Doctor(params){
 	this.getAppointments=function(){return appointments; };
 
 	this.toString=function(){
-		return JSON.stringify({
+		return {
 			doctor: {username: user.getUsername(), name: name}
-		});
+		};
 	};
 
 	this.findAppointment=function(targetAppt){

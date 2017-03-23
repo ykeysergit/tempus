@@ -82,21 +82,19 @@ function Appointment(params){
 	this.getMessage=function(){return message; };
 
 	this.toString=function(){
-		return JSON.stringify(
-			{
-				appointment: {
-					purpose: purpose,
-					dateTime: dateTime.toLocaleString(),
-					message: message,
-					status: status,
-					year: self.getDateTime().getYear()+'',
-					month: self.getDateTime().getMonth()+'',
-					day: self.getDateTime().getDate()+'',
-					hour: self.getDateTime().getHours()+'',
-					minute: self.getDateTime().getMinutes()+''
-				}
-			}
-		);
+		return {
+					appointment: {
+						purpose: purpose,
+						dateTime: dateTime.toLocaleString(),
+						message: message,
+						status: status,
+						year: self.getDateTime().getYear()+'',
+						month: self.getDateTime().getMonth()+'',
+						day: self.getDateTime().getDate()+'',
+						hour: self.getDateTime().getHours()+'',
+						minute: self.getDateTime().getMinutes()+''
+					}
+			};
 	};
 
 	this.toJson=function(){

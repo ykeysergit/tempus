@@ -11,9 +11,9 @@ module.exports=function Answer(params){
 	this.getText=function(){return text; };
 
 	this.toString=function(){
-		return JSON.stringify({
+		return {
 			text: text
-		});
+		};
 	};
 
 	this.toJson=function(){

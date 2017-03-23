@@ -115,9 +115,9 @@ function Patient(params){
 	};
 
 	this.toString=function(){
-		return JSON.stringify({
+		return {
 			patient: {username: user.getUsername(), name: name, age: age, email: email}
-		});
+		};
 	};
 
 	this.toJson=function(){
@@ -133,7 +133,7 @@ Patient.findByName=function(name){
 	console.log('[Patient][foundByName] Find by name: '+name);
 
 	if(!(name instanceof String) && !name){
-		throw 'Name is invalid: '+name;
+		return null;
 	}
 
 	var foundPatient=Patient.all().find(function(patient){

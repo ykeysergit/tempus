@@ -33,7 +33,7 @@ function User(params){
 	this.getUserType=function(){return userType; };
 
 	this.toString=function(){
-		return JSON.stringify({username: username, userType: userType});
+		return {username: username, userType: userType};
 	};
 
 	this.toJson=function(){

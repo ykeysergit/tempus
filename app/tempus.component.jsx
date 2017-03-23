@@ -3,6 +3,10 @@ class Tempus extends React.Component{
 		return 'login';
 	}
 
+  static get allPatientsUrl(){
+    return 'patients';
+  }
+
   static get patientType(){
     return 'Patient';
   }
@@ -32,6 +36,8 @@ class Tempus extends React.Component{
     	this.updateUsername = this.updateUsername.bind(this);
     	this.updatePassword = this.updatePassword.bind(this);
     	this.login = this.login.bind(this);
+      this.getSelectedPatient = this.getSelectedPatient.bind(this);
+      this.getAllPatientsReactRowElements = this.getAllPatientsReactRowElements.bind(this);
   	}
 
   	updateUsername(evt){
@@ -86,10 +92,71 @@ class Tempus extends React.Component{
       }.bind(this));
   	}
 
+  getAllPatientsReactRowElements(){
+    let patients=[];
+    var self=this;
+
+    jQuery.ajax({
+      url: Tempus.allPatientsUrl,
+      async: false,
+      method: 'GET',
+      contentType: 'application/json',
+      dataType: 'json',
+      success: function(data, textStatus, jqXHR){
+        if(jqXHR.status==200){
+          patients=data;
+        }
+      }
+    });
+
+    console.log('[Tempus][getAllPatientsReactRowElements] response: '+JSON.stringify(patients));
+
+    if(patients.length>0){
+      return patients.map(function(patientItem){
+          return (
+            <tr><td onClick={self.getSelectedPatient}>{patientItem.patient.username}</td></tr>
+            );
+        }
+      );
+    }else{
+      return (
+          <tr>No patients found</tr>
+        );
+    }
+  }
+
+  getSelectedPatient(evt){
+    console.log('[Tempus][getSelectedPatient] selected username: ' + evt.target.innerText);
+
+    var self=this;
+    var usernameSelected = evt.target.innerText;
+
+    return true;
+  }
+
 	render(){
 		if(this.state.status == Tempus.doctorLoggedIn){
       return (
-          <h1>Doctor logged-in</h1>
+          <div>
+            <h1>Doctor logged-in</h1>
+            <div className="panel panel-default">
+              <div className="panel-heading">
+                <h3 className="panel-title">Patients</h3>
+              </div>
+              <div className="panel-body">
+                <table className="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th>Username</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {this.getAllPatientsReactRowElements()}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
         );
     }
     else if(this.state.status == Tempus.patientLoggedIn){

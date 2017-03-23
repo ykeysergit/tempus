@@ -31,12 +31,12 @@ module.exports=function Question(params){
 	this.getAnswers=function(){ return answers; };
 
 	this.toString=function(){
-		return JSON.stringify({
+		return {
 			question: text,
 			answers: answers.map(
 					function(answer){ return answer.toJson(); }
 				)
-		});
+		};
 	};
 
 	this.toJson=function(){
