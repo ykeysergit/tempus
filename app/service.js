@@ -26,6 +26,8 @@ require("jsdom").env("", function(err, window) {
 	app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   		extended: false
 	})); 
+
+	app.use(Express.static('../app'));
 })();
 
 
@@ -395,11 +397,6 @@ app.post('/login', function(req, resp){
 	}
 });
 
-// ping
-app.get('/', function(req, resp){
-	resp.send('Hello World!');
-});
-
 // Upload a patient file
 app.post('/patients/:username/files', function(req, resp){
 	console.log("Route params: "+JSON.stringify(req.params));
@@ -443,6 +440,11 @@ app.get('/patients/:username/files', function(req, resp){
 		);
 
 	resp.type('json').send(filesJson);
+});
+
+// ping
+app.get('/', function(req, resp){
+	res.redirect('/index.html');
 });
 
 app.listen(8080, function(){
