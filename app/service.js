@@ -385,7 +385,13 @@ e.g.
 }
 */
 app.post('/login', function(req, resp){
-	console.log('Req params: '+JSON.stringify(req.body));
+	console.log('Req body: ' + JSON.stringify(req.body));
+	console.log('Req params: ' + JSON.stringify(req.params));
+
+	if(!req.body.user){
+		resp.status(500).send('user credentials not provided');
+		return;
+	}
 
 	const foundUser = User.accountLookup[req.body.user.username];
 
